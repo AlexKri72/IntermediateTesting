@@ -1,0 +1,20 @@
+Server 1
+Total tracking time: 	24 seconds, of which:
+Didn't work: 			12 second, 50.000% of the total time
+Worked unstable: 		4 second, 16.667% of the total time
+Worked properly: 		8 second, 33.333% of the total time
+Details: 
+{
+	"2022-08-20 19:13:06.542472" : "no worked",
+	"2022-08-20 19:13:08.678410" : "no worked",
+	"2022-08-20 21:29:04.404259" : "no worked",
+	"2022-08-20 21:29:06.518802" : "no worked",
+	"2022-08-20 21:29:08.678107" : "non stable worked",
+	"2022-08-20 21:29:10.828065" : "no worked",
+	"2022-08-20 21:29:16.947396" : "no worked",
+	"2022-08-20 21:29:19.020927" : "is worked",
+	"2022-08-20 21:29:21.176212" : "is worked",
+	"2022-08-20 21:29:23.257410" : "is worked",
+	"2022-08-20 21:29:25.322337" : "is worked",
+	"2022-08-20 21:29:27.426155" : "non stable worked",
+}
