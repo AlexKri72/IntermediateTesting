@@ -2,6 +2,8 @@ import sqlite3
 from datetime import datetime
 from Service import *
 
+# запись данных в базу
+
 
 def ExportData(service):
     nameService = service.getServiceName()

@@ -1,7 +1,7 @@
 import random
 import Service
 import ExportData
-
+# генератор состояния севисов
 condition = ["is worked         ", "no worked         ", "non stable worked "]
 quantityOfServices = 5
 

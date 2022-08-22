@@ -1,6 +1,8 @@
 import sqlite3
 import GeneratorOfCondition
 
+# получает информацию из базы данных и записывает ф файл в формате JSON
+
 
 def GetServiceHistory(name):
     base = sqlite3.connect("dataBase.db")

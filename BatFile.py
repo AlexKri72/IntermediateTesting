@@ -24,19 +24,22 @@ def Bat():
     emptyLbl = Label(window, text=" "*70+"\n"+" "*70+"\n"+" "*70 +
                      "\n"+" "*70+"\n"+" "*70, font=16)
     emptyLbl.grid(column=0, row=1)
+    # запуск и остановка отслеживания сервисов
     btnStart = Button(window, text="Start", background="lavender", foreground="#B22222",
                       width=15, height=2, font=18, command=lambda: threading.Thread(target=Run, daemon=True).start())
     btnStart.grid(column=1, row=0)
     btnStop = Button(window, text="Stop", background="lavender", foreground="#B22222",
                      width=15, height=2, font=18, command=Stop)
     btnStop.grid(column=1, row=1)
+    # проверка и вывод накопленной информации на экран
     btnCheckSLA = Button(window, text="Check SLA", background="lavender", foreground="#B22222",
                          width=15, height=2, font=18, command=lambda: threading.Thread(target=CheckSLA, daemon=True).start())
     btnCheckSLA.grid(column=1, row=2)
+    # сброс базы данных
     btnCheckSLA = Button(window, text="Throw off log SLA", background="lavender", foreground="#B22222",
                          width=15, height=2, font=18, command=lambda: threading.Thread(target=ThrowLog, daemon=True).start())
     btnCheckSLA.grid(column=1, row=3)
-
+    # выбор сервиса для формирования детального отчета в файл
     global choiceService
     choiceService = IntVar()
     choiceService.set(1)
@@ -51,6 +54,8 @@ def Bat():
     btnHistory.grid(column=1, row=5)
 
     window.mainloop()
+
+    # функции, реагирующие на нажатие кнопок
 
 
 def HistoryView():

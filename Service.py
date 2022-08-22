@@ -1,4 +1,4 @@
-
+# основная сущность- сервис
 class Service:
 
     def __init__(self, service, condition):
