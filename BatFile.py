@@ -1,92 +1,42 @@
-import sqlite3
-import threading
-import GeneratorOfCondition
-from Service import Service
-from ServiceCondition import ServiceCondition
-from time import sleep
-from tkinter import *
-import ImportData
-import GetServiceHistory
 import os
+from tkinter import *
+import tkinter as tk
+from tkcalendar import Calendar
+import CreateNote
 
 os.system("cls")
-
-stopFlag = True
 
 
 def Bat():
     global window
-    window = Tk()
-    window.title("Опрос состояния сервисов")
-    window.geometry('450x550+700+300')
+    window = tk.Tk()
+    window.title("Заметки")
 
-    # Кнопки
-    emptyLbl = Label(window, text=" "*70+"\n"+" "*70+"\n"+" "*70 +
-                     "\n"+" "*70+"\n"+" "*70, font=16)
-    emptyLbl.grid(column=0, row=1)
-    # запуск и остановка отслеживания сервисов
-    btnStart = Button(window, text="Start", background="lavender", foreground="#B22222",
-                      width=15, height=2, font=18, command=lambda: threading.Thread(target=Run, daemon=True).start())
-    btnStart.grid(column=1, row=0)
-    btnStop = Button(window, text="Stop", background="lavender", foreground="#B22222",
-                     width=15, height=2, font=18, command=Stop)
-    btnStop.grid(column=1, row=1)
-    # проверка и вывод накопленной информации на экран
-    btnCheckSLA = Button(window, text="Check SLA", background="lavender", foreground="#B22222",
-                         width=15, height=2, font=18, command=lambda: threading.Thread(target=CheckSLA, daemon=True).start())
-    btnCheckSLA.grid(column=1, row=2)
-    # сброс базы данных
-    btnCheckSLA = Button(window, text="Throw off log SLA", background="lavender", foreground="#B22222",
-                         width=15, height=2, font=18, command=lambda: threading.Thread(target=ThrowLog, daemon=True).start())
-    btnCheckSLA.grid(column=1, row=3)
-    # выбор сервиса для формирования детального отчета в файл
-    global choiceService
-    choiceService = IntVar()
-    choiceService.set(1)
+    # add calendar and button "Select day"
+    cal = Calendar(window, selectmode='day', year=2023, month=2, day=1)
+    cal.grid(row=0, column=0, padx=20, pady=20, sticky=NW)
 
-    for i in GeneratorOfCondition.serviceName:
-        rb = Radiobutton(text=i, value=int(
-            i[-1]), variable=choiceService, padx=15, pady=10, font=18)
-        rb.grid(row=2+int(i[-1]), column=0, sticky=W)
+    def grad_date():
+        date.config(text="Выбрана дата: " + cal.get_date())
 
-    btnHistory = Button(window, text="Save log to file ", background="lavender", foreground="#B22222",
-                        width=15, height=2, font=18, command=lambda: threading.Thread(target=HistoryView, daemon=True).start())
-    btnHistory.grid(column=1, row=5)
+    Button(window, text="Выбрать дату", command=grad_date).grid(
+        row=1, column=0, padx=20, pady=5, sticky=N)
+    date = Label(window, text="")
+    date.grid(row=2, column=0, padx=20, pady=20, sticky=N)
+
+    # add button
+    Button(text="Создать заметку", width=25, height=3, command=CreateNote.CreateNote).grid(row=0, column=1, padx=20, pady=20,
+                                                                                           sticky=N)
+    Button(text="Изменить заметку", width=25,
+           height=3).grid(row=0, column=2, padx=20, pady=20, sticky=N)
+    Button(text="Удалить заметку", width=25,
+           height=3).grid(row=0, column=3, padx=20, pady=20, sticky=N)
+
+    for i in range(3):
+        window.columnconfigure(i, weight=1, minsize=75)
+        window.rowconfigure(i, weight=1, minsize=50)
 
     window.mainloop()
 
-    # функции, реагирующие на нажатие кнопок
 
-
-def HistoryView():
-    return GetServiceHistory.GetServiceHistory("Server "+str(choiceService.get()))
-
-
-def ThrowLog():
-    base = sqlite3.connect("dataBase.db")
-    base.execute("DELETE FROM  My_table;")
-    base.commit()
-
-
-def CheckSLA():
-    lbl = Label(window, text=ImportData.ImportData(), font=16, justify=LEFT)
-    lbl.grid(column=0, row=1)
-
-
-def Run():
-    global stopFlag
-    stopFlag = True
-    Start()
-
-
-def Start():
-    while stopFlag:
-        lbl = Label(window, text=ServiceCondition(
-            GeneratorOfCondition.FillData()), font=16, justify=LEFT)
-        lbl.grid(column=0, row=0)
-        sleep(2)
-
-
-def Stop():
-    global stopFlag
-    stopFlag = False
+# функции, реагирующие на нажатие кнопок
