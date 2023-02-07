@@ -14,15 +14,15 @@ def Bat():
 
     # add calendar and button "Select day"
     cal = Calendar(window, selectmode='day', year=2023, month=2, day=1)
-    cal.grid(row=0, column=0, padx=20, pady=20, sticky=NW)
+    cal.grid(row=0, column=0, padx=20, pady=20, sticky=NW, rowspan=2)
 
     def grad_date():
         date.config(text="Выбрана дата: " + cal.get_date())
 
     Button(window, text="Выбрать дату", command=grad_date).grid(
-        row=1, column=0, padx=20, pady=5, sticky=N)
+        row=2, column=0, padx=20, pady=5, sticky=N)
     date = Label(window, text="")
-    date.grid(row=2, column=0, padx=20, pady=20, sticky=N)
+    date.grid(row=3, column=0, padx=20, pady=20, sticky=N)
 
     # add button
     Button(text="Создать заметку", width=25, height=3, command=CreateNote.CreateNote).grid(row=0, column=1, padx=20, pady=20,
@@ -36,7 +36,8 @@ def Bat():
         window.columnconfigure(i, weight=1, minsize=75)
         window.rowconfigure(i, weight=1, minsize=50)
 
+    with open("note.csv", "r") as file:
+        list = file.readlines()
+    Listbox(listvariable=Variable(value=list)).grid(
+        row=1, column=1, sticky="nsew", columnspan=3, padx=10)
     window.mainloop()
-
-
-# функции, реагирующие на нажатие кнопок
