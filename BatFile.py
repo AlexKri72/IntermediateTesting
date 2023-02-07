@@ -4,7 +4,17 @@ import tkinter as tk
 from tkcalendar import Calendar
 import CreateNote
 
+
 os.system("cls")
+
+
+def DeleteNote():
+    selection = NoteBox.curselection()
+    NoteBox.delete(selection[0])
+    listNote.pop(selection[0])
+
+    with open("note.csv", "w") as file:
+        file.writelines(listNote)
 
 
 def Bat():
@@ -30,14 +40,17 @@ def Bat():
     Button(text="Изменить заметку", width=25,
            height=3).grid(row=0, column=2, padx=20, pady=20, sticky=N)
     Button(text="Удалить заметку", width=25,
-           height=3).grid(row=0, column=3, padx=20, pady=20, sticky=N)
+           height=3, command=DeleteNote).grid(row=0, column=3, padx=20, pady=20, sticky=N)
 
     for i in range(3):
         window.columnconfigure(i, weight=1, minsize=75)
         window.rowconfigure(i, weight=1, minsize=50)
 
     with open("note.csv", "r") as file:
-        list = file.readlines()
-    Listbox(listvariable=Variable(value=list)).grid(
-        row=1, column=1, sticky="nsew", columnspan=3, padx=10)
+        global listNote
+        listNote = file.readlines()
+    global NoteBox
+    NoteBox = Listbox(listvariable=Variable(value=listNote))
+    NoteBox.grid(row=1, column=1, sticky="nsew", columnspan=3, padx=10)
+
     window.mainloop()
